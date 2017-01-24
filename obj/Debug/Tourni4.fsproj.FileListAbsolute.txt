@@ -1,0 +1,11 @@
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Tourni4.exe.config
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Tourni4.XML
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Tourni4.exe
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Tourni4.pdb
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\FSharp.Core.dll
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Suave.dll
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\FSharp.Core.xml
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Suave.pdb
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\bin\Debug\Suave.xml
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\obj\Debug\Tourni4.exe
+c:\users\alvin.ondzounga\documents\visual studio 2015\Projects\Tourni4\obj\Debug\Tourni4.pdb

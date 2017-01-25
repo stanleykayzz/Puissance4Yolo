@@ -1,19 +1,8 @@
 ﻿module game
 
-//objet métier game
-//int id 
-//string key 
-//Stringstatus (WAITING:Attente second joueur, 
-//TURN_PLAYER_1:tour joueur1, TURN_PLAYER_2: tour joueur2, PLAYER_1_WON:joueur 1 gagne,PLAYER_2_WON:joueur 2 gagne )
-//String gridOrientation “vertical” ou “horizontal” array [42] 
-//string gridCells,
-//les string valent “no” si vide, 
-//“p1” si jeton du joueur1, “p2” si jeton du joueur 2 
-
 type Game = class
    val mutable gameId : int
    val mutable gameStatus : string
-   //gameStatus=[|"WAITING"; "TURN_PLAYER_1"; "TURN_PLAYER_2";"PLAYER_1_WON"; "PLAYER_2_WON";|];
    val mutable gridOrientation : string
    val mutable gridCells : string[]
    val mutable playerName1 : string
@@ -38,8 +27,36 @@ type Game = class
           this.playerName2 <- p2
       else
           printf "Les deux joueurs ne doivent pas avoir le même pseudo"
-   //Methode gravité, qui va faire descendre un pion au dernier utilisé
 
+   //Methode Action, qui permet d'ajouter un pion dans le tableau
+   //member this.action (colIndex:int)
+   member this.playerAction(playerName:string, col: int ref):unit =
+        if(this.gridOrientation.Equals("horizontale")) then
+            while (col <= ref 6 ) do
+                if(playerName.Equals(this.playerName1)) then
+                    this.gravity(col,"p1")
+                else
+                    this.gravity(col,"p2")
+        
+   //Methode gravité, qui va faire descendre un pion au dernier utilisé
+    // 0 1 2 3 4 5      0 1 2 3 4 5 6 
+    // X X X X X X      X X X X X X X
+    // X X X X X X      X X X X X X X
+    // X X X X X X      X X X X X X X
+    // X X X X X X      X X X X X X X
+    // X X X X X X      X X X X X X X
+    // X X X X X X      X X X X X X X
+    // X X X X X X 
+    member this.gravity( colIndex: int byref , tokenType:string):unit =
+        if(this.gridOrientation.Equals("Horizontale") && colIndex <6) then
+            while(this.gridCells.[colIndex].Equals("no") && this.gridCells.[colIndex+6].Equals("no")) do
+                colIndex <- colIndex + 6
+            this.gridCells.[colIndex] <- tokenType
+       else
+            if(colIndex <7) then
+                while(this.gridCells.[colIndex].Equals("no") && this.gridCells.[colIndex+7].Equals("no")) do
+                    colIndex <- colIndex + 7
+                this.gridCells.[colIndex] <- tokenType
 
     //Methode turnToLeft, qui tourne le tableau et applique la gravité
 

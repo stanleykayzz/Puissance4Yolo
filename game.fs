@@ -161,3 +161,39 @@ type Game = class
     //Methode recursive checkGrid, verifie si il y a une ligne de 4
 
 end
+
+let g = new Game(1,"WAITING","Alvin","azyeyazyeyaz")
+
+for cells in g.gridCells do
+   printfn "%s" cells
+
+printfn " player 1 : %s" g.playerName1
+printfn " player 2 : %s" g.playerName2
+g.joinGame("seiya","azyeyazyeyaz")
+printfn " player 2 : %s" g.playerName2
+printfn " on lance une action du p1 à la col 5"
+g.playerAction(g.playerName1, 0)
+
+//ok
+g.playerAction(g.playerName1, 4)
+g.playerAction(g.playerName1, 3)
+g.playerAction(g.playerName1, 1)
+g.playerAction(g.playerName1, 2)
+g.playerAction(g.playerName1, 5)
+
+for c in g.gridCells do
+   printfn "%s" c
+
+//tourner la grille 90° vers la gauche
+g.turnGridToLeft(g.playerName2)
+   
+printfn "%i" g.gridCells.Length
+printfn "%s" g.gridOrientation
+printfn "%s" g.gridCells.[41]
+printfn "%s" g.gridCells.[40]
+printfn "%s" g.gridCells.[39]
+printfn "%s" g.gridCells.[38]
+printfn "%s" g.gridCells.[37]
+
+
+printfn "%b" (g.gridOrientation = "Verticale")

@@ -144,5 +144,20 @@ type Game = class
             aCounter <- aCounter - 1
             this.recursiveAddInfoToTuple(aCounter,gridToSaveOnTuple,listOfColumns,listOfValues,col,line)
 
+    //callA
+    //on appel la methoe qu va permettre d'appliqué la gravité sur chaque pion du tableau retourné
+    member this.applyGravityOnEachTokenOfTurnedGrid(newC, listCols:int[],listVals:string[]) :unit =
+        let mutable newCounter = newC
+        let mutable listOfColumns = listCols
+        let mutable listOfValues = listVals
+
+        if( newCounter < listOfColumns.Length) then
+            this.gravityOnAddedToken(listOfColumns.[newCounter],listOfValues.[newCounter])
+            newCounter <- newCounter + 1
+            this.applyGravityOnEachTokenOfTurnedGrid(newCounter, listOfColumns,listOfValues)
+
+    //Methode turnToRight, qui tourne le tableau à 90° vers la droite et applique la gravité
+
+    //Methode recursive checkGrid, verifie si il y a une ligne de 4
 
 end

@@ -123,4 +123,26 @@ type Game = class
             this.recursiveTurnToLeft(tmp,counter,tv)
             //ensuite on applique la gravité à chaque pions
             this.applyGravityOnTurnedGrid()
+    
+    //on l'appel pour remplir la liste de valeur a appliquer
+    // callagain methode
+    member this.recursiveAddInfoToTuple(count:int, gridToSaveOnTuple:string[], loi:int[],lov:string[],c:int,l:int):unit =
+        let mutable aCounter = count
+        let mutable listOfColumns = loi
+        let mutable listOfValues = lov
+        let mutable col = c
+        let mutable line =l
+        if(aCounter >= 0) then
+            printfn " à la valeur %i de line %i et de colonne %i on a  %s" aCounter line col gridToSaveOnTuple.[aCounter]
+            Array.set listOfColumns aCounter col
+            Array.set listOfValues aCounter gridToSaveOnTuple.[aCounter]
+            //list.push([c,t[i]])
+            col <- col - 1
+            if(aCounter <0) then
+                aCounter <- 5
+                line <- line - 1
+            aCounter <- aCounter - 1
+            this.recursiveAddInfoToTuple(aCounter,gridToSaveOnTuple,listOfColumns,listOfValues,col,line)
+
+
 end

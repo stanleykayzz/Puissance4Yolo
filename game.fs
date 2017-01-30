@@ -16,5 +16,14 @@ type Game = class
       { gameId = id; gameStatus = statu; gridOrientation = "Verticale";gridCells = Array.create 42 "no"; playerName1 = p1;playerName2 ="?"; gameKey = key;}
       then
          printfn " Objet créé avec: {(gameid : %i, player1 :%s), ( gameKey : %s , orientation grid :%s)}"
-            this.gameId this.playerName1 this.gameKey this.gridOrientation 
+            this.gameId this.playerName1 this.gameKey this.gridOrientation
+     //Methode Join, permet a un joueur 2 de rejoindre une partie
+   // Vérifier que nom different du createur (!) 
+   //ajoute nom du joueur 2 à l’objet game. choisis qui commence et met l’état correspondant 
+   member this.joinGame (p2:string, key:string) :unit= 
+      if not(p2 = this.playerName1) then
+          this.playerName2 <- p2
+      else
+          printf "Les deux joueurs ne doivent pas avoir le même pseudo"    
+   
 end

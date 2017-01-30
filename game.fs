@@ -49,4 +49,17 @@ type Game = class
                    printfn " token prends la valeur p2"
                    this.gravityOnAddedToken(col,"p2")  
 
+    //Méthode récursive appelé pour l'ajout des jetons
+   member this.WhileRecurMethod ( c: int, t:string,colI:int):unit =
+        printfn " on est dans la fonction recursive et on a col à %i" c
+        let mutable colIndex = c
+        let mutable tokenType = t
+
+        if(colIndex+colI < this.gridCells.Length && this.gridCells.[colIndex+colI]="no" && this.gridCells.[colIndex]="no") then
+            colIndex <- colIndex + colI
+            this.WhileRecurMethod(colIndex,tokenType,colI)
+        else
+            this.gridCells.[colIndex] <- tokenType
+
+
 end

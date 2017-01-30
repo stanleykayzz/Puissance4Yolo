@@ -25,5 +25,28 @@ type Game = class
           this.playerName2 <- p2
       else
           printf "Les deux joueurs ne doivent pas avoir le même pseudo"    
-   
+   //Methode Action, qui permet d'ajouter un pion dans le tableau
+   //member this.action (colIndex:int)
+   member this.playerAction(playerName:string, c: int ):unit =
+       printfn " on est dans player action"
+       let mutable col = c
+       if(this.gridOrientation.Equals("Horizontale")) then
+           printfn "le tableau est Horizontale , on doit passer une valeur de %s à la col %i"  playerName col
+           if (col <=  6 ) then
+               if(playerName = (this.playerName1)) then
+                   printfn " token prends la valeur p1"
+                   this.gravityOnAddedToken(col,"p1")
+               elif(playerName = (this.playerName2)) then                   
+                   printfn " token prends la valeur p2"
+                   this.gravityOnAddedToken(col,"p2") 
+       elif(this.gridOrientation = ("Verticale")) then
+           printfn "le tableau est Verticale , on doit passer une valeur de %s à la col %i"  playerName col
+           if (col <=  5 ) then
+               if(playerName = (this.playerName1)) then
+                   printfn " token prends la valeur p1"
+                   this.gravityOnAddedToken(col,"p1")
+               elif(playerName = (this.playerName2)) then                   
+                   printfn " token prends la valeur p2"
+                   this.gravityOnAddedToken(col,"p2")  
+
 end

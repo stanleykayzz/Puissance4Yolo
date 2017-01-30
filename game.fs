@@ -69,4 +69,37 @@ type Game = class
         else
             this.WhileRecurMethod(cI,tokenType,7)
 
+     //Lorsqu'on a retourné un tableau on l'appel pour y appliquer la gravité
+   member this.applyGravityOnTurnedGrid():unit =       
+       if(this.gridOrientation.Equals("Horizontale")) then
+           let mutable colIndexH = 6
+           let mutable lineIndex = 5
+           let mutable counter = 41
+           while(counter >= 0) do
+               if(colIndexH < 0)then
+                   colIndexH <- 5
+                   lineIndex <- lineIndex - 1
+               counter <- counter - 1
+       elif(this.gridOrientation.Equals("Verticale") ) then
+           let mutable tmp = this.gridCells
+           Array.fill this.gridCells 0 42 "no"
+
+           let mutable colIndexV = 5
+           let mutable lineIndex = 6
+           let mutable counter = 41
+           let mutable listVal:string[] = Array.create 42 "no"
+           let mutable listIndex:int[] = Array.create 42 0 
+           this.recursiveAddInfoToTuple(counter,tmp,listIndex,listVal,colIndexV,lineIndex)
+           let mutable a = 0
+           this.applyGravityOnEachTokenOfTurnedGrid(a,listIndex,listVal)
+
+    member this.recursiveTurnToLeft(temporaryTab: string[],c: int,orientationTab: int[]):unit =
+        let mutable count = c
+        let mutable tmp: string[] = temporaryTab
+        if(count < 42) then
+            printfn "a %i on met la val %s qui correspond a %i avec i = %i" count temporaryTab.[orientationTab.[41-count]] orientationTab.[41-count] (41-count)
+            this.gridCells.[count] <- tmp.[orientationTab.[41-count]]
+            count <- count + 1
+            this.recursiveTurnToLeft(tmp,count,orientationTab)
+
 end

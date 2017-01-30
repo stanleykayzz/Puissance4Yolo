@@ -60,6 +60,13 @@ type Game = class
             this.WhileRecurMethod(colIndex,tokenType,colI)
         else
             this.gridCells.[colIndex] <- tokenType
-
+    
+    //Methode gravité, qui va faire descendre un pion au dernier utilisé
+   member this.gravityOnAddedToken( cI: int , tokenType:string):unit =
+        let mutable colIndex = cI
+        if(this.gridOrientation = "Verticale") then
+            this.WhileRecurMethod(cI,tokenType,6)
+        else
+            this.WhileRecurMethod(cI,tokenType,7)
 
 end

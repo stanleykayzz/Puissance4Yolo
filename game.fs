@@ -102,4 +102,25 @@ type Game = class
             count <- count + 1
             this.recursiveTurnToLeft(tmp,count,orientationTab)
 
+     //Methode turnToLeft, qui tourne le tableau à 90° vers la gauche et applique la gravité
+    member this.turnGridToLeft(playerName:string):unit =
+        //on crée un tableau temporaire
+        let mutable tmp = this.gridCells
+        Array.fill this.gridCells 0 42 "no"
+        //this.gridCells = Array.create 41 "no"
+        let tv = [|36;30;24;18;12;6;0;37;31;25;19;13;7;1;38;32;26;20;14;8;2;39;33;27;21;15;9;3;40;34;28;22;16;10;4;41;35;29;23;17;11;5|]
+        let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
+
+        //if horizontal ==> vertical
+        if(this.gridOrientation.Equals("Horizontale")) then
+            this.gridOrientation <- "Verticale"
+            
+        elif(this.gridOrientation.Equals("Verticale")) then
+            this.gridOrientation <- "Horizontale"
+            let mutable counter = 0
+            this.gridCells <- Array.create 42 "no"
+            //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
+            this.recursiveTurnToLeft(tmp,counter,tv)
+            //ensuite on applique la gravité à chaque pions
+            this.applyGravityOnTurnedGrid()
 end

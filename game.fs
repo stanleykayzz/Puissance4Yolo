@@ -102,6 +102,15 @@ type Game = class
             count <- count + 1
             this.recursiveTurnToLeft(tmp,count,orientationTab)
 
+    member this.recursiveTurnToRight(temporaryTab: string[],c: int,orientationTab: int[]):unit =        
+        let mutable count = c
+        let mutable tmp: string[] = temporaryTab
+        if(count < 42) then
+            printfn "a %i on met la val %s qui correspond a %i avec i = %i" count tmp.[orientationTab.[41-count]] orientationTab.[41-count] (41-count)
+            this.gridCells.[count] <- tmp.[orientationTab.[count]]
+            count <- count + 1
+            this.recursiveTurnToRight(tmp,count,orientationTab)
+
      //Methode turnToLeft, qui tourne le tableau à 90° vers la gauche et applique la gravité
     member this.turnGridToLeft(playerName:string):unit =
         //on crée un tableau temporaire
@@ -165,8 +174,29 @@ type Game = class
             copy.[zero] <- this.gridCells.[zero]
             zero <- zero + 1
             this.copyThisGridInto(copy,zero)
+    
     //Methode turnToRight, qui tourne le tableau à 90° vers la droite et applique la gravité
+    member this.turnGridToRight(playerName:string):unit =
+       //on crée un tableau temporaire
+       let mutable tmp = Array.create 42 "no"
+       this.copyThisGridInto(tmp,0)
+       printfn " on vide le tableau this.gridcells"
+       Array.fill this.gridCells 0 42 "no"        
+       let tv = [|36;30;24;18;12;6;0;37;31;25;19;13;7;1;38;32;26;20;14;8;2;39;33;27;21;15;9;3;40;34;28;22;16;10;4;41;35;29;23;17;11;5|]
+       let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
 
+       //if horizontal ==> vertical
+       if(this.gridOrientation.Equals("Horizontale")) then
+           this.gridOrientation <- "Verticale"
+            
+       elif(this.gridOrientation.Equals("Verticale")) then
+           this.gridOrientation <- "Horizontale"
+           let mutable counter = 0
+          // this.gridCells <- Array.create 42 "no"
+           //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
+           this.recursiveTurnToRight(tmp,counter,tv)
+           //ensuite on applique la gravité à chaque pions
+           this.applyGravityOnTurnedGrid()
     //Methode recursive checkGrid, verifie si il y a une ligne de 4
 
 end
@@ -195,6 +225,7 @@ for c in g.gridCells do
 
 //tourner la grille 90° vers la gauche ok
 g.turnGridToLeft(g.playerName2)
+g.turnGridToRight(g.playerName2)
    
 printfn "%i" g.gridCells.Length
 printfn "%s" g.gridOrientation

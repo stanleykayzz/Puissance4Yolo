@@ -1,11 +1,15 @@
-﻿open Suave
+﻿module prog
+
+open Suave
 open Suave.Successful
 open Suave.Filters
 open Suave.Operators
 open Suave.RequestErrors
-
 //on import le fsharp data pour le json
 open FSharp.Data
+//on importe la classe qu'on a créé
+open game
+
 
 //http://localhost:8083/elm/api/create.php?playerName=" ++ name
 //http://localhost/elm/apiPHP/info.php?gameKey
@@ -19,8 +23,8 @@ let php =
         | Choice2Of2 msg -> BAD_REQUEST msg)    
 
 //on crée le fichier json "create"
-let create = JsonValue.Parse(""" 
-    { "playerName1": "Tomas", "gameKey": "1dz9dayzgdya8OA53" }""")
+(*let create = JsonValue.Parse(""" 
+    { "playerName1": "Tomas", "gameKey": "1dz9dayzgdya8OA53" }""")*)
 
 let php2 =
     request (fun r ->
@@ -29,8 +33,8 @@ let php2 =
         | Choice2Of2 msg -> BAD_REQUEST msg)       
 
 //on crée le fichier json "join"
-let join = JsonValue.Parse(""" 
-    { "playerName2": "Mat", "gameKey": "1dz9dayzgdya8OA53" }""")
+(*let join = JsonValue.Parse(""" 
+    { "playerName2": "Mat", "gameKey": "1dz9dayzgdya8OA53" }""")*)
 
 let php3 =
     request (fun r ->
@@ -54,7 +58,7 @@ let php4 =
            | Choice2Of2 msg -> BAD_REQUEST msg)  
 
 //on crée le fichier json "info"
-let info = JsonValue.Parse(""" 
+(*let info = JsonValue.Parse(""" 
     {
   "gameKey" : "1337gameKey123",
   "status" : "PLAYER_1_WON",
@@ -68,7 +72,7 @@ let info = JsonValue.Parse("""
   ,"no","p2","p1","p1","p2","no","no"
   ,"p1","p1","p2","p2","p1","no","no"
   ,"p2","p1","p2","p1","p1","p2","no"]
-}""")
+}""")*)
 
 let webPart = 
     choose [

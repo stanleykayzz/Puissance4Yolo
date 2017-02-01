@@ -72,24 +72,30 @@ type Game = class
      //Lorsqu'on a retourné un tableau on l'appel pour y appliquer la gravité
    member this.applyGravityOnTurnedGrid():unit =       
        if(this.gridOrientation.Equals("Horizontale")) then
+           printfn "GRAVITE SUR TURNED GRID HORIZONTALE"
+           let mutable tmp = Array.copy this.gridCells
+           Array.fill this.gridCells 0 42 "no"
            let mutable colIndexH = 6
+           let mutable countCol = 6
            let mutable lineIndex = 5
            let mutable counter = 41
-           while(counter >= 0) do
-               if(colIndexH < 0)then
-                   colIndexH <- 5
-                   lineIndex <- lineIndex - 1
-               counter <- counter - 1
+           let mutable listVal:string[] = Array.create 42 "no"
+           let mutable listIndex:int[] = Array.create 42 0 
+           this.recursiveAddInfoToTuple(counter,tmp,listIndex,listVal,colIndexH,lineIndex,countCol)
+           let mutable a = 0
+           this.applyGravityOnEachTokenOfTurnedGrid(a,listIndex,listVal)
        elif(this.gridOrientation.Equals("Verticale") ) then
-           let mutable tmp = this.gridCells
+           printfn "GRAVITE SUR TURNED GRID VERTICALE"
+           //let mutable tmp = this.gridCells
+           let mutable tmp = Array.copy this.gridCells
            Array.fill this.gridCells 0 42 "no"
-
            let mutable colIndexV = 5
+           let mutable countCol = 5
            let mutable lineIndex = 6
            let mutable counter = 41
            let mutable listVal:string[] = Array.create 42 "no"
            let mutable listIndex:int[] = Array.create 42 0 
-           this.recursiveAddInfoToTuple(counter,tmp,listIndex,listVal,colIndexV,lineIndex)
+           this.recursiveAddInfoToTuple(counter,tmp,listIndex,listVal,colIndexV,lineIndex,countCol)
            let mutable a = 0
            this.applyGravityOnEachTokenOfTurnedGrid(a,listIndex,listVal)
 
@@ -120,12 +126,17 @@ type Game = class
         Array.fill this.gridCells 0 42 "no"        
         let tv = [|36;30;24;18;12;6;0;37;31;25;19;13;7;1;38;32;26;20;14;8;2;39;33;27;21;15;9;3;40;34;28;22;16;10;4;41;35;29;23;17;11;5|]
         let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
-
-        //if horizontal ==> vertical
         if(this.gridOrientation.Equals("Horizontale")) then
             this.gridOrientation <- "Verticale"
-            
-        elif(this.gridOrientation.Equals("Verticale")) then
+            let mutable counter = 0
+           // this.gridCells <- Array.create 42 "no"
+            //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
+            this.recursiveTurnToLeft(tmp,counter,th)
+            //ensuite on applique la gravité à chaque pions
+            this.applyGravityOnTurnedGrid()   
+            printfn " ON RENTRE UNE FOIS DANS HORIZONTALE"
+        elif(this.gridOrientation.Equals("Verticale")) then            
+            printfn " ON RENTRE UNE FOIS DANS VERTICALE"
             this.gridOrientation <- "Horizontale"
             let mutable counter = 0
            // this.gridCells <- Array.create 42 "no"
@@ -133,14 +144,14 @@ type Game = class
             this.recursiveTurnToLeft(tmp,counter,tv)
             //ensuite on applique la gravité à chaque pions
             this.applyGravityOnTurnedGrid()
-    
     //on l'appel pour remplir la liste de valeur a appliquer
     // callagain methode
-    member this.recursiveAddInfoToTuple(count:int, gridToSaveOnTuple:string[], loi:int[],lov:string[],c:int,l:int):unit =
+    member this.recursiveAddInfoToTuple(count:int, gridToSaveOnTuple:string[], loi:int[],lov:string[],c:int,l:int,countCol:int):unit =
         let mutable aCounter = count
         let mutable listOfColumns = loi
         let mutable listOfValues = lov
         let mutable col = c
+        printfn " ADD TO TUUUUPLE ON A col a %i" col
         let mutable line =l
         if(aCounter >= 0) then
             printfn " à la valeur %i de line %i et de colonne %i on a  %s" aCounter line col gridToSaveOnTuple.[aCounter]
@@ -148,11 +159,12 @@ type Game = class
             Array.set listOfValues aCounter gridToSaveOnTuple.[aCounter]
             //list.push([c,t[i]])
             col <- col - 1
-            if(aCounter <0) then
-                aCounter <- 5
+            if(col <0) then
+                //aCounter <- col
+                col <- countCol
                 line <- line - 1
             aCounter <- aCounter - 1
-            this.recursiveAddInfoToTuple(aCounter,gridToSaveOnTuple,listOfColumns,listOfValues,col,line)
+            this.recursiveAddInfoToTuple(aCounter,gridToSaveOnTuple,listOfColumns,listOfValues,col,line,countCol)
 
     //callA
     //on appel la methoe qu va permettre d'appliqué la gravité sur chaque pion du tableau retourné
@@ -188,9 +200,16 @@ type Game = class
        //if horizontal ==> vertical
        if(this.gridOrientation.Equals("Horizontale")) then
            this.gridOrientation <- "Verticale"
-            
+           printfn " HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+           let mutable counter = 0
+          // this.gridCells <- Array.create 42 "no"
+           //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
+           this.recursiveTurnToRight(tmp,counter,th)
+           //ensuite on applique la gravité à chaque pions
+           this.applyGravityOnTurnedGrid()
        elif(this.gridOrientation.Equals("Verticale")) then
            this.gridOrientation <- "Horizontale"
+           printfn " VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
            let mutable counter = 0
           // this.gridCells <- Array.create 42 "no"
            //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
@@ -202,9 +221,6 @@ type Game = class
 end
 
 let g = new Game(1,"WAITING","Alvin","azyeyazyeyaz")
-
-for cells in g.gridCells do
-   printfn "%s" cells
 
 printfn " player 1 : %s" g.playerName1
 printfn " player 2 : %s" g.playerName2
@@ -223,8 +239,9 @@ g.playerAction(g.playerName1, 5)
 for c in g.gridCells do
    printfn "%s" c
 
-//tourner la grille 90° vers la gauche ok
+//tourner la grille 90° vers la gauche ok ok horizontale et verticale
 g.turnGridToLeft(g.playerName2)
+//tourner la grille 90° vers la gauche ok ok horizontale et verticale
 g.turnGridToRight(g.playerName2)
    
 printfn "%i" g.gridCells.Length

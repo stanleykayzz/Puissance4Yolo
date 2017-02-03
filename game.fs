@@ -9,13 +9,15 @@ type Game = class
    val mutable gridCells : string[]
    val mutable playerName1 : string
    val mutable playerName2 : string
+   val mutable player1Key : string
+   val mutable player2Key : string
    val mutable gameKey : string
     //les constructeurs , par défaut et surchargés
    new() as this =
-      { gameId = (-1); gameStatus = "?"; gridOrientation = "?"; gridCells = Array.create 42 "no";playerName1="?";playerName2 ="?"; gameKey="?"}
+      { gameId = (-1); gameStatus = "?"; gridOrientation = "?"; gridCells = Array.create 42 "no";player1Key="?";player2Key ="?";playerName1="?";playerName2 ="?"; gameKey="?"}
 
    new(id, p1) as this =
-      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "Verticale";gridCells = Array.create 42 "no"; playerName1 = p1;playerName2 ="?"; gameKey = "key";}
+      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "Verticale";gridCells = Array.create 42 "no";player1Key= this.generateRandomKey() ;player2Key ="?"; playerName1 = p1;playerName2 ="?"; gameKey = this.generateRandomKey()}
       then
          printfn " Objet créé avec: {(gameid : %i, player1 :%s), ( gameKey : %s , orientation grid :%s)}"
             this.gameId this.playerName1 this.gameKey this.gridOrientation
@@ -23,18 +25,19 @@ type Game = class
    // Vérifier que nom different du createur (!) 
    //ajoute nom du joueur 2 à l’objet game. choisis qui commence et met l’état correspondant 
    member this.joinGame (p2:string, key:string) :unit= 
-      if not(p2 = this.playerName1) then
           this.playerName2 <- p2
-      else
-          printf "Les deux joueurs ne doivent pas avoir le même pseudo"    
+          this.player2Key <- this.generateRandomKey()
+
    //on ajoute un player 1
    member this.setFirstPlayer(p1:string):unit =
+       this.gameKey <- this.generateRandomKey()
+       this.gameStatus <- "WAITING"
        this.playerName1 <- p1
+       this.player1Key <- this.generateRandomKey()
    //on ajoute un id 
    member this.setId(id:int):unit =
       this.gameId <- id + 1
-
-   member this.generateRandomKeyForPlayer():string =
+   member this.generateRandomKey():string =
       let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
       let random = new System.Random()
       seq {
@@ -236,8 +239,20 @@ type Game = class
 
     member this.setFirstPlayerAndReturnJson( player1:string):string =
        this.setFirstPlayer(player1)
-       let createJson:create = { player1Key = this.playerName1; gameKey = "zLUGgtrht4456" }
+       let createJson:create = { player1Key = this.playerName1; gameKey = this.gameKey }
        let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(createJson)
+       (json)
+
+    member this.joinPlayer1OnGameAndReturnJsonString( player2:string,gameKey:string):string =
+       this.joinGame(player2,gameKey)   
+       this.gameStatus <- "TURN_PLAYER_1"    
+       let joinJson:join = { player2Key = this.player2Key}
+       let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(joinJson)
+       (json)
+
+    member this.infoGameAndReturnJsonString():string =
+       let infoGameJson:information = { key = this.gameKey; status = this.gameStatus; player1Name=this.playerName1;player2Name=this.playerName2; gridOrientation= this.gridOrientation; gridCells = this.gridCells}
+       let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(infoGameJson)
        (json)
     //Methode recursive checkGrid, verifie si il y a une ligne de 4
     

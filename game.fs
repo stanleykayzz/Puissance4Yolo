@@ -12,12 +12,13 @@ type Game = class
    val mutable player1Key : string
    val mutable player2Key : string
    val mutable gameKey : string
+   val mutable lastPlayer : string
     //les constructeurs , par défaut et surchargés
    new() as this =
-      { gameId = (-1); gameStatus = "?"; gridOrientation = "?"; gridCells = Array.create 42 "no";player1Key="?";player2Key ="?";playerName1="?";playerName2 ="?"; gameKey="?"}
+      { gameId = (-1); gameStatus = "?"; gridOrientation = "?"; gridCells = Array.create 42 "no";player1Key="?";player2Key ="?";playerName1="?";playerName2 ="?"; gameKey="?";lastPlayer="?"}
 
    new(id, p1) as this =
-      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "Verticale";gridCells = Array.create 42 "no";player1Key= this.generateRandomKey() ;player2Key ="?"; playerName1 = p1;playerName2 ="?"; gameKey = this.generateRandomKey()}
+      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "Verticale";gridCells = Array.create 42 "no";player1Key= this.generateRandomKey() ;player2Key ="?"; playerName1 = p1;playerName2 ="?"; gameKey = this.generateRandomKey(); lastPlayer=""}
       then
          printfn " Objet créé avec: {(gameid : %i, player1 :%s), ( gameKey : %s , orientation grid :%s)}"
             this.gameId this.playerName1 this.gameKey this.gridOrientation
@@ -56,18 +57,24 @@ type Game = class
                if(playerName = (this.playerName1)) then
                    printfn " token prends la valeur p1"
                    this.gravityOnAddedToken(col,"p1")
+                   this.nextPlayerToSetAction()
                elif(playerName = (this.playerName2)) then                   
                    printfn " token prends la valeur p2"
-                   this.gravityOnAddedToken(col,"p2") 
+                   this.gravityOnAddedToken(col,"p2")
+                   this.nextPlayerToSetAction()
+
        elif(this.gridOrientation = ("Verticale")) then
            printfn "le tableau est Verticale , on doit passer une valeur de %s à la col %i"  playerName col
            if (col <=  5 ) then
                if(playerName = (this.playerName1)) then
                    printfn " token prends la valeur p1"
                    this.gravityOnAddedToken(col,"p1")
+                   this.nextPlayerToSetAction()
+
                elif(playerName = (this.playerName2)) then                   
                    printfn " token prends la valeur p2"
                    this.gravityOnAddedToken(col,"p2")  
+                   this.nextPlayerToSetAction()
 
     //Méthode récursive appelé pour l'ajout des jetons
    member this.WhileRecurMethod ( c: int, t:string,colI:int):unit =
@@ -245,7 +252,8 @@ type Game = class
 
     member this.joinPlayer1OnGameAndReturnJsonString( player2:string,gameKey:string):string =
        this.joinGame(player2,gameKey)   
-       this.gameStatus <- "TURN_PLAYER_1"    
+       this.gameStatus <- "TURN_PLAYER_1"
+       this.lastPlayer <- this.playerName1
        let joinJson:join = { player2Key = this.player2Key}
        let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(joinJson)
        (json)
@@ -254,6 +262,14 @@ type Game = class
        let infoGameJson:information = { key = this.gameKey; status = this.gameStatus; player1Name=this.playerName1;player2Name=this.playerName2; gridOrientation= this.gridOrientation; gridCells = this.gridCells}
        let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(infoGameJson)
        (json)
+
+    member this.nextPlayerToSetAction():unit =
+       if(this.lastPlayer = this.playerName1) then
+           this.gameStatus <- "TURN_PLAYER_2"
+           this.lastPlayer <- this.playerName2
+       elif(this.lastPlayer = this.playerName2)then
+           this.gameStatus <- "TURN_PLAYER_1"
+           this.lastPlayer <- this.playerName1
     //Methode recursive checkGrid, verifie si il y a une ligne de 4
     
 end

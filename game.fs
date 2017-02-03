@@ -1,4 +1,6 @@
 ﻿module game
+open Newtonsoft.Json
+open customTypes
 //on crée la classe métier 
 type Game = class
    val mutable gameId : int
@@ -12,8 +14,8 @@ type Game = class
    new() as this =
       { gameId = (-1); gameStatus = "?"; gridOrientation = "?"; gridCells = Array.create 42 "no";playerName1="?";playerName2 ="?"; gameKey="?"}
 
-   new(id, statu,  p1,key) as this =
-      { gameId = id; gameStatus = statu; gridOrientation = "Verticale";gridCells = Array.create 42 "no"; playerName1 = p1;playerName2 ="?"; gameKey = key;}
+   new(id, p1) as this =
+      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "Verticale";gridCells = Array.create 42 "no"; playerName1 = p1;playerName2 ="?"; gameKey = "key";}
       then
          printfn " Objet créé avec: {(gameid : %i, player1 :%s), ( gameKey : %s , orientation grid :%s)}"
             this.gameId this.playerName1 this.gameKey this.gridOrientation
@@ -25,6 +27,21 @@ type Game = class
           this.playerName2 <- p2
       else
           printf "Les deux joueurs ne doivent pas avoir le même pseudo"    
+   //on ajoute un player 1
+   member this.setFirstPlayer(p1:string):unit =
+       this.playerName1 <- p1
+   //on ajoute un id 
+   member this.setId(id:int):unit =
+      this.gameId <- id + 1
+
+   member this.generateRandomKeyForPlayer():string =
+      let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+      let random = new System.Random()
+      seq {
+          for i in {0..7} do
+              yield chars.[random.Next(chars.Length)]
+      } |> Seq.toArray |> (fun x -> new string(x))
+
    //Methode Action, qui permet d'ajouter un pion dans le tableau
    //member this.action (colIndex:int)
    member this.playerAction(playerName:string, c: int ):unit =
@@ -216,11 +233,17 @@ type Game = class
            this.recursiveTurnToRight(tmp,counter,tv)
            //ensuite on applique la gravité à chaque pions
            this.applyGravityOnTurnedGrid()
-    //Methode recursive checkGrid, verifie si il y a une ligne de 4
 
+    member this.setFirstPlayerAndReturnJson( player1:string):string =
+       this.setFirstPlayer(player1)
+       let createJson:create = { player1Key = this.playerName1; gameKey = "zLUGgtrht4456" }
+       let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(createJson)
+       (json)
+    //Methode recursive checkGrid, verifie si il y a une ligne de 4
+    
 end
 
-let g = new Game(1,"WAITING","Alvin","azyeyazyeyaz")
+let g = new Game(1,"Alvin")
 
 printfn " player 1 : %s" g.playerName1
 printfn " player 2 : %s" g.playerName2

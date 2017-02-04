@@ -18,7 +18,7 @@ type Game = class
       { gameId = (-1); gameStatus = "?"; gridOrientation = "?"; gridCells = Array.create 42 "no";player1Key="?";player2Key ="?";playerName1="?";playerName2 ="?"; gameKey="?";lastPlayer="?"}
 
    new(id, p1) as this =
-      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "Verticale";gridCells = Array.create 42 "no";player1Key= this.generateRandomKey() ;player2Key ="?"; playerName1 = p1;playerName2 ="?"; gameKey = this.generateRandomKey(); lastPlayer=""}
+      { gameId = id + 1; gameStatus = "WAITING"; gridOrientation = "vertical";gridCells = Array.create 42 "no";player1Key= this.generateRandomKey() ;player2Key ="?"; playerName1 = p1;playerName2 ="?"; gameKey = this.generateRandomKey(); lastPlayer=""}
       then
          printfn " Objet créé avec: {(gameid : %i, player1 :%s), ( gameKey : %s , orientation grid :%s)}"
             this.gameId this.playerName1 this.gameKey this.gridOrientation
@@ -35,6 +35,9 @@ type Game = class
        this.gameStatus <- "WAITING"
        this.playerName1 <- p1
        this.player1Key <- this.generateRandomKey()
+       this.gridOrientation <- "vertical"
+       printfn "ORRRRRRRRRRRRRRRRRRRRRIIIIIIIIIIIII  %s" this.gridOrientation
+
    //on ajoute un id 
    member this.setId(id:int):unit =
       this.gameId <- id + 1
@@ -51,7 +54,7 @@ type Game = class
    member this.playerAction(playerName:string, c: int ):unit =
        printfn " on est dans player action"
        let mutable col = c
-       if(this.gridOrientation.Equals("Horizontale")) then
+       if(this.gridOrientation.Equals("horizontal")) then
            printfn "le tableau est Horizontale , on doit passer une valeur de %s à la col %i"  playerName col
            if (col <=  6 ) then
                if(playerName = (this.playerName1)) then
@@ -63,8 +66,8 @@ type Game = class
                    this.gravityOnAddedToken(col,"p2")
                    this.nextPlayerToSetAction()
 
-       elif(this.gridOrientation = ("Verticale")) then
-           printfn "le tableau est Verticale , on doit passer une valeur de %s à la col %i"  playerName col
+       elif(this.gridOrientation = ("vertical")) then
+           printfn "le tableau est vertical , on doit passer une valeur de %s à la col %i"  playerName col
            if (col <=  5 ) then
                if(playerName = (this.playerName1)) then
                    printfn " token prends la valeur p1"
@@ -91,14 +94,14 @@ type Game = class
     //Methode gravité, qui va faire descendre un pion au dernier utilisé
    member this.gravityOnAddedToken( cI: int , tokenType:string):unit =
         let mutable colIndex = cI
-        if(this.gridOrientation = "Verticale") then
+        if(this.gridOrientation = "vertical") then
             this.WhileRecurMethod(cI,tokenType,6)
         else
             this.WhileRecurMethod(cI,tokenType,7)
 
      //Lorsqu'on a retourné un tableau on l'appel pour y appliquer la gravité
    member this.applyGravityOnTurnedGrid():unit =       
-       if(this.gridOrientation.Equals("Horizontale")) then
+       if(this.gridOrientation.Equals("horizontal")) then
            printfn "GRAVITE SUR TURNED GRID HORIZONTALE"
            let mutable tmp = Array.copy this.gridCells
            Array.fill this.gridCells 0 42 "no"
@@ -111,7 +114,7 @@ type Game = class
            this.recursiveAddInfoToTuple(counter,tmp,listIndex,listVal,colIndexH,lineIndex,countCol)
            let mutable a = 0
            this.applyGravityOnEachTokenOfTurnedGrid(a,listIndex,listVal)
-       elif(this.gridOrientation.Equals("Verticale") ) then
+       elif(this.gridOrientation.Equals("vertical") ) then
            printfn "GRAVITE SUR TURNED GRID VERTICALE"
            //let mutable tmp = this.gridCells
            let mutable tmp = Array.copy this.gridCells
@@ -153,8 +156,8 @@ type Game = class
         Array.fill this.gridCells 0 42 "no"        
         let tv = [|36;30;24;18;12;6;0;37;31;25;19;13;7;1;38;32;26;20;14;8;2;39;33;27;21;15;9;3;40;34;28;22;16;10;4;41;35;29;23;17;11;5|]
         let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
-        if(this.gridOrientation.Equals("Horizontale")) then
-            this.gridOrientation <- "Verticale"
+        if(this.gridOrientation.Equals("horizontal")) then
+            this.gridOrientation <- "vertical"
             let mutable counter = 0
            // this.gridCells <- Array.create 42 "no"
             //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
@@ -162,9 +165,9 @@ type Game = class
             //ensuite on applique la gravité à chaque pions
             this.applyGravityOnTurnedGrid()   
             printfn " ON RENTRE UNE FOIS DANS HORIZONTALE"
-        elif(this.gridOrientation.Equals("Verticale")) then            
+        elif(this.gridOrientation.Equals("vertical")) then            
             printfn " ON RENTRE UNE FOIS DANS VERTICALE"
-            this.gridOrientation <- "Horizontale"
+            this.gridOrientation <- "horizontal"
             let mutable counter = 0
            // this.gridCells <- Array.create 42 "no"
             //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
@@ -201,7 +204,7 @@ type Game = class
         let mutable listOfValues = listVals
 
         if( newCounter < listOfColumns.Length) then
-            this.gravityOnAddedToken(listOfColumns.[newCounter],listOfValues.[newCounter])
+            this.gravityOnAddedToken(listOfColumns.[41-newCounter],listOfValues.[41-newCounter])
             newCounter <- newCounter + 1
             this.applyGravityOnEachTokenOfTurnedGrid(newCounter, listOfColumns,listOfValues)
 
@@ -225,8 +228,8 @@ type Game = class
        let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
 
        //if horizontal ==> vertical
-       if(this.gridOrientation.Equals("Horizontale")) then
-           this.gridOrientation <- "Verticale"
+       if(this.gridOrientation.Equals("horizontal")) then
+           this.gridOrientation <- "vertical"
            printfn " HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
            let mutable counter = 0
           // this.gridCells <- Array.create 42 "no"
@@ -234,8 +237,8 @@ type Game = class
            this.recursiveTurnToRight(tmp,counter,th)
            //ensuite on applique la gravité à chaque pions
            this.applyGravityOnTurnedGrid()
-       elif(this.gridOrientation.Equals("Verticale")) then
-           this.gridOrientation <- "Horizontale"
+       elif(this.gridOrientation.Equals("vertical")) then
+           this.gridOrientation <- "horizontal"
            printfn " VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
            let mutable counter = 0
           // this.gridCells <- Array.create 42 "no"
@@ -262,6 +265,27 @@ type Game = class
        let infoGameJson:information = { key = this.gameKey; status = this.gameStatus; player1Name=this.playerName1;player2Name=this.playerName2; gridOrientation= this.gridOrientation; gridCells = this.gridCells}
        let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(infoGameJson)
        (json)
+ 
+    member this.actionGameReturnJsonString(playerKey:string,actionType:string,actionInfo:string):string =
+       if(playerKey = this.playerName1)then
+           if(actionType = "token")then
+               this.playerAction(this.playerName1,System.Int32.Parse(actionInfo))
+           elif(actionType = "turn")then
+               if(actionInfo = "right")then
+                   this.turnGridToRight(this.playerName1)
+               elif(actionInfo = "left")then
+                   this.turnGridToLeft(this.playerName1)
+       elif(playerKey = this.playerName2 || playerKey = this.player2Key)then
+           if(actionType = "token")then
+               this.playerAction(this.playerName2,System.Int32.Parse(actionInfo))
+           elif(actionType = "turn")then
+               if(actionInfo = "right")then
+                   this.turnGridToRight(this.playerName2)
+               elif(actionInfo = "left")then
+                   this.turnGridToLeft(this.playerName2)
+       let actionGameJson:action = { key = this.gameKey; status = this.gameStatus; player1Name=this.playerName1;player2Name=this.playerName2; gridOrientation= this.gridOrientation; gridCells = this.gridCells}
+       let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(actionGameJson)
+       (json)
 
     member this.nextPlayerToSetAction():unit =
        if(this.lastPlayer = this.playerName1) then
@@ -274,7 +298,9 @@ type Game = class
     
 end
 
-let g = new Game(1,"Alvin")
+let g = new Game()
+g.setId(1)
+g.setFirstPlayer("Alvin")
 
 printfn " player 1 : %s" g.playerName1
 printfn " player 2 : %s" g.playerName2
@@ -307,4 +333,4 @@ printfn "%s" g.gridCells.[38]
 printfn "%s" g.gridCells.[37]
 
 
-printfn "%b" (g.gridOrientation = "Verticale")
+printfn "%b" (g.gridOrientation = "vertical")

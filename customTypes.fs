@@ -26,5 +26,3 @@ type action = {
   gridOrientation:string
   gridCells : string[]
 }
-
-

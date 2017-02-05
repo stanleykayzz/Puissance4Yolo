@@ -22,7 +22,7 @@ type Game = class
       then
          printfn " Objet créé avec: {(gameid : %i, player1 :%s), ( gameKey : %s , orientation grid :%s)}"
             this.gameId this.playerName1 this.gameKey this.gridOrientation
-     //Methode Join, permet a un joueur 2 de rejoindre une partie
+   //Methode Join, permet a un joueur 2 de rejoindre une partie
    // Vérifier que nom different du createur (!) 
    //ajoute nom du joueur 2 à l’objet game. choisis qui commence et met l’état correspondant 
    member this.joinGame (p2:string, key:string) :unit= 
@@ -36,7 +36,6 @@ type Game = class
        this.playerName1 <- p1
        this.player1Key <- this.generateRandomKey()
        this.gridOrientation <- "vertical"
-       printfn "ORRRRRRRRRRRRRRRRRRRRRIIIIIIIIIIIII  %s" this.gridOrientation
 
    //on ajoute un id 
    member this.setId(id:int):unit =
@@ -52,46 +51,35 @@ type Game = class
    //Methode Action, qui permet d'ajouter un pion dans le tableau
    //member this.action (colIndex:int)
    member this.playerAction(playerName:string, c: int ):unit =
-       printfn " on est dans player action"
        let mutable col = c
        if(this.gridOrientation.Equals("horizontal")) then
-           printfn "le tableau est Horizontale , on doit passer une valeur de %s à la col %i"  playerName col
            if (col <=  6 ) then
                if(playerName = (this.playerName1)) then
-                   printfn " token prends la valeur p1"
                    this.gravityOnAddedToken(col,"p1")
                    this.nextPlayerToSetAction()
                elif(playerName = (this.playerName2)) then                   
-                   printfn " token prends la valeur p2"
                    this.gravityOnAddedToken(col,"p2")
                    this.nextPlayerToSetAction()
-
        elif(this.gridOrientation = ("vertical")) then
-           printfn "le tableau est vertical , on doit passer une valeur de %s à la col %i"  playerName col
            if (col <=  5 ) then
                if(playerName = (this.playerName1)) then
-                   printfn " token prends la valeur p1"
                    this.gravityOnAddedToken(col,"p1")
                    this.nextPlayerToSetAction()
-
                elif(playerName = (this.playerName2)) then                   
-                   printfn " token prends la valeur p2"
                    this.gravityOnAddedToken(col,"p2")  
                    this.nextPlayerToSetAction()
 
     //Méthode récursive appelé pour l'ajout des jetons
    member this.WhileRecurMethod ( c: int, t:string,colI:int):unit =
-        printfn " on est dans la fonction recursive et on a col à %i" c
         let mutable colIndex = c
         let mutable tokenType = t
-
         if(colIndex+colI < this.gridCells.Length && this.gridCells.[colIndex+colI]="no" && this.gridCells.[colIndex]="no") then
             colIndex <- colIndex + colI
             this.WhileRecurMethod(colIndex,tokenType,colI)
         else
             this.gridCells.[colIndex] <- tokenType
     
-    //Methode gravité, qui va faire descendre un pion au dernier utilisé
+   //Methode gravité, qui va faire descendre un pion au dernier utilisé
    member this.gravityOnAddedToken( cI: int , tokenType:string):unit =
         let mutable colIndex = cI
         if(this.gridOrientation = "vertical") then
@@ -99,10 +87,9 @@ type Game = class
         else
             this.WhileRecurMethod(cI,tokenType,7)
 
-     //Lorsqu'on a retourné un tableau on l'appel pour y appliquer la gravité
+   //Lorsqu'on a retourné un tableau on l'appel pour y appliquer la gravité
    member this.applyGravityOnTurnedGrid():unit =       
        if(this.gridOrientation.Equals("horizontal")) then
-           printfn "GRAVITE SUR TURNED GRID HORIZONTALE"
            let mutable tmp = Array.copy this.gridCells
            Array.fill this.gridCells 0 42 "no"
            let mutable colIndexH = 6
@@ -115,8 +102,6 @@ type Game = class
            let mutable a = 0
            this.applyGravityOnEachTokenOfTurnedGrid(a,listIndex,listVal)
        elif(this.gridOrientation.Equals("vertical") ) then
-           printfn "GRAVITE SUR TURNED GRID VERTICALE"
-           //let mutable tmp = this.gridCells
            let mutable tmp = Array.copy this.gridCells
            Array.fill this.gridCells 0 42 "no"
            let mutable colIndexV = 5
@@ -133,7 +118,6 @@ type Game = class
         let mutable count = c
         let mutable tmp: string[] = temporaryTab
         if(count < 42) then
-            printfn "a %i on met la val %s qui correspond a %i avec i = %i" count tmp.[orientationTab.[41-count]] orientationTab.[41-count] (41-count)
             this.gridCells.[count] <- tmp.[orientationTab.[41-count]]
             count <- count + 1
             this.recursiveTurnToLeft(tmp,count,orientationTab)
@@ -142,7 +126,6 @@ type Game = class
         let mutable count = c
         let mutable tmp: string[] = temporaryTab
         if(count < 42) then
-            printfn "a %i on met la val %s qui correspond a %i avec i = %i" count tmp.[orientationTab.[41-count]] orientationTab.[41-count] (41-count)
             this.gridCells.[count] <- tmp.[orientationTab.[count]]
             count <- count + 1
             this.recursiveTurnToRight(tmp,count,orientationTab)
@@ -152,28 +135,26 @@ type Game = class
         //on crée un tableau temporaire
         let mutable tmp = Array.create 42 "no"
         this.copyThisGridInto(tmp,0)
-        printfn " on vide le tableau this.gridcells"
         Array.fill this.gridCells 0 42 "no"        
         let tv = [|36;30;24;18;12;6;0;37;31;25;19;13;7;1;38;32;26;20;14;8;2;39;33;27;21;15;9;3;40;34;28;22;16;10;4;41;35;29;23;17;11;5|]
         let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
         if(this.gridOrientation.Equals("horizontal")) then
             this.gridOrientation <- "vertical"
             let mutable counter = 0
-           // this.gridCells <- Array.create 42 "no"
             //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
             this.recursiveTurnToLeft(tmp,counter,th)
             //ensuite on applique la gravité à chaque pions
-            this.applyGravityOnTurnedGrid()   
-            printfn " ON RENTRE UNE FOIS DANS HORIZONTALE"
+            this.applyGravityOnTurnedGrid()
+            this.nextPlayerToSetAction()
         elif(this.gridOrientation.Equals("vertical")) then            
-            printfn " ON RENTRE UNE FOIS DANS VERTICALE"
             this.gridOrientation <- "horizontal"
             let mutable counter = 0
-           // this.gridCells <- Array.create 42 "no"
             //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
             this.recursiveTurnToLeft(tmp,counter,tv)
             //ensuite on applique la gravité à chaque pions
             this.applyGravityOnTurnedGrid()
+            this.nextPlayerToSetAction()
+
     //on l'appel pour remplir la liste de valeur a appliquer
     // callagain methode
     member this.recursiveAddInfoToTuple(count:int, gridToSaveOnTuple:string[], loi:int[],lov:string[],c:int,l:int,countCol:int):unit =
@@ -181,16 +162,12 @@ type Game = class
         let mutable listOfColumns = loi
         let mutable listOfValues = lov
         let mutable col = c
-        printfn " ADD TO TUUUUPLE ON A col a %i" col
         let mutable line =l
         if(aCounter >= 0) then
-            printfn " à la valeur %i de line %i et de colonne %i on a  %s" aCounter line col gridToSaveOnTuple.[aCounter]
             Array.set listOfColumns aCounter col
             Array.set listOfValues aCounter gridToSaveOnTuple.[aCounter]
-            //list.push([c,t[i]])
             col <- col - 1
             if(col <0) then
-                //aCounter <- col
                 col <- countCol
                 line <- line - 1
             aCounter <- aCounter - 1
@@ -222,7 +199,6 @@ type Game = class
        //on crée un tableau temporaire
        let mutable tmp = Array.create 42 "no"
        this.copyThisGridInto(tmp,0)
-       printfn " on vide le tableau this.gridcells"
        Array.fill this.gridCells 0 42 "no"        
        let tv = [|36;30;24;18;12;6;0;37;31;25;19;13;7;1;38;32;26;20;14;8;2;39;33;27;21;15;9;3;40;34;28;22;16;10;4;41;35;29;23;17;11;5|]
        let th = [|35;28;21;14;7;0;36;29;22;15;8;1;37;30;23;16;9;2;38;31;24;17;10;3;39;32;25;18;11;4;40;33;26;19;12;5;41;34;27;20;13;6|]
@@ -230,22 +206,20 @@ type Game = class
        //if horizontal ==> vertical
        if(this.gridOrientation.Equals("horizontal")) then
            this.gridOrientation <- "vertical"
-           printfn " HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
            let mutable counter = 0
-          // this.gridCells <- Array.create 42 "no"
            //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
            this.recursiveTurnToRight(tmp,counter,th)
            //ensuite on applique la gravité à chaque pions
            this.applyGravityOnTurnedGrid()
+           this.nextPlayerToSetAction()
        elif(this.gridOrientation.Equals("vertical")) then
            this.gridOrientation <- "horizontal"
-           printfn " VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
            let mutable counter = 0
-          // this.gridCells <- Array.create 42 "no"
            //On retourne d'abord le tableau, on le passe 6colx7line en 7col x 6line
            this.recursiveTurnToRight(tmp,counter,tv)
            //ensuite on applique la gravité à chaque pions
            this.applyGravityOnTurnedGrid()
+           this.nextPlayerToSetAction()
 
     member this.setFirstPlayerAndReturnJson( player1:string):string =
        this.setFirstPlayer(player1)
@@ -290,7 +264,6 @@ type Game = class
        let json:string = Newtonsoft.Json.JsonConvert.SerializeObject(actionGameJson)
        (json)
 
-
     member this.recursiveCheckGridCells(count:int):unit =
         let mutable lastCounter = count
         if(lastCounter >= 0)then
@@ -313,20 +286,23 @@ type Game = class
         if(x+cardinalValue < 42 && x+cardinalValue >= 0 ) then
             if(t.[x+cardinalValue] = t.[x] && not(t.[x] = "no") ) then
                 count <- count+1
+            elif(not(t.[x+cardinalValue] = t.[x] ))then
+                countChecker<-80
         if(count = 4) then
             if(t.[x]="p1") then
                 this.gameStatus <- "PLAYER_1_WON"
+                printfn "on a un gagnant au %i" cardinalValue
             elif(t.[x]="p2") then
                 this.gameStatus <- "PLAYER_2_WON"
-        elif(count < 4 && (x+cardinalValue) < 42  && (x+cardinalValue) >= 0  && countCheck <= 3) then
+                printfn "on a un gagnant au %i" cardinalValue
+        elif(count < 4 && (x+cardinalValue) < 42  && (x+cardinalValue) >= 0  && countChecker <= 3) then
             x <- (x + cardinalValue)
             countChecker <- countChecker + 1
             this.checkNext4Cells(x,cardinalValue,t,count,countCheck)
 
     //Methode recursive checkGrid, verifie si il y a une ligne de 4
     member this.checkGrid(ind:int):unit =
-        let mutable index = ind
-        
+        let mutable index = ind        
         let mutable cs=1
         let mutable cne=1
         let mutable cnw=1
@@ -346,62 +322,32 @@ type Game = class
             let mutable southValue=6
             let mutable eastValue=1
             let mutable westValue=(-1)
-            //Vérification EST
-            if(index+eastValue>41 || index=41 || index=35 || index=29 || index=23 || index=17 || index=11 || index=5 )then
-                printfn "On ne peut pas verifier sur la droite  "
-            elif(index+eastValue>=0 && index+eastValue<42)then
-               printfn "On  peut verifier sur la droite à "
-              //on vérifie les 4 prochaines valeurs tant que c'est possible
-               if(index+(3*eastValue) < 42 && not(t.[index] ="no"))then
-                   this.checkNext4Cells(index,eastValue,t,ce,0)
-            //Verification SUD
-            if(index+southValue>41 || index=36 || index=37 || index=38 || index=39 || index=40 || index=41 )then
-                printfn "On ne peut pas verifier le bas à "
-            elif(index+southValue>=0 && index+southValue<42) then                
-                if(index+(3*southValue) < 42 && not(t.[index] ="no"))then
-                    this.checkNext4Cells(index,southValue,t,cs,0)
+
             //Verification OUEST              
-            if(index+westValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 )then
+            if(index+westValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 || (t.[index] ="no"))then
                 printfn "On ne peut pas verifier sur la gauche "
             elif(index+westValue< 42 && index+westValue >= 0)then
-                printfn "On  peut verifier sur la gauche à "
-                if(index+(3*westValue) < 42 && index+(3*westValue) >= 0 && not(t.[index] ="no"))then
+                if(index+(3*westValue) < 42 && index+(3*westValue) >= 0 )then
                     this.checkNext4Cells(index,westValue,t,cw,0)
-            //Verification SUD OUEST 
-            if(index+southWestValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 || index=37 || index=38 || index=39 || index=40 || index=41 )then
-                printfn "On ne peut pas verifier sur la BAS GAUCHE à "
-            elif(index+southWestValue < 42 && index+(3*southWestValue) >= 0)then
-                printfn "On  peut verifier sur lE BAS GAUCHE à "
-                if(index+(3*southWestValue) < 42 && not(t.[index] ="no"))then
-                    this.checkNext4Cells(index,southWestValue,t,csw,0)
-            //Verification SUD EST 
-            if(index+southEastValue>41 || index=41 || index=36 || index=37 || index=38 || index=39 || index=40 || index=35 || index=29 || index=23 || index=17 || index=11 || index=5 )then
-                printfn "On ne peut pas verifier sur la BAS DROITE à "
-            elif(index+southEastValue < 42)then
-                printfn "On  peut verifier sur lE BAS DROITE à "
-                if(index+(3*southEastValue) < 42 && not(t.[index] ="no"))then
-                    this.checkNext4Cells(index,southEastValue,t,cse,0)
             //Verification NORD OUEST 
-            if(index+northWestValue<0 || index=0 || index=1 || index=2 || index=3 || index=4 || index=5 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 )then
+            if(index+northWestValue<0 || index=0 || index=1 || index=2 || index=3 || index=4 || index=5 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 || (t.[index] ="no"))then
                 printfn "On ne peut pas verifier sur le HAUT GAUCHE "
             elif( index+northWestValue >= 0)then
-                printfn "On  peut verifier sur lE HAUT GAUCHE à "
-                if(not(t.[index] ="no") && index+(3*northWestValue) >= 0)then
+                if( index+(3*northWestValue) >= 0)then
                     this.checkNext4Cells(index,northWestValue,t,cnw,0)
             //Verification NORD EST 
-            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 || index=11|| index=17 || index=23 || index=29 || index=35|| index=41 )then
+            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 || index=11|| index=17 || index=23 || index=29 || index=35|| index=41 ||(t.[index] ="no"))then
                 printfn "On ne peut pas verifier sur la HAUT DROITE "
             elif(index+northEastValue >= 0)then
-                printfn "On  peut verifier sur lE HAUT DROITE à "
-                if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
+                if( index+(3*northEastValue) >= 0)then
                     this.checkNext4Cells(index,northEastValue,t,cne,0)
             //Verification NORD 
-            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 )then
+            if(index+northValue<0 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 || (t.[index] ="no"))then
                 printfn "On ne peut pas verifier sur la HAUT "
-            elif(index+northEastValue >= 0)then
+            elif(index+northValue >= 0)then
                 printfn "On  peut verifier sur lE HAUT "
-                if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
-                    this.checkNext4Cells(index,northEastValue,t,cne,0)
+                if( index+(3*northValue) >= 0)then
+                    this.checkNext4Cells(index,northValue,t,cne,0)
         
         if(this.gridOrientation="horizontal")then
             let mutable northValue:int = (-7)
@@ -412,98 +358,29 @@ type Game = class
             let mutable southValue=7
             let mutable eastValue=1
             let mutable westValue=(-1)
-            //Vérification EST
-            if(index+eastValue>41 || index=41 || index=35 || index=29 || index=23 || index=17 || index=11 || index=5 )then
-                printfn "On ne peut pas verifier sur la droite  "
-            elif(index+eastValue>=0 && index+eastValue<42)then
-               printfn "On  peut verifier sur la droite à "
-              //on vérifie les 4 prochaines valeurs tant que c'est possible
-               if(index+(3*eastValue) < 42 && not(t.[index] ="no"))then
-                   this.checkNext4Cells(index,eastValue,t,ce,0)
-            //Verification SUD
-            if(index+southValue>41 || index=36 || index=37 || index=38 || index=39 || index=40 || index=41 )then
-                printfn "On ne peut pas verifier le bas à "
-            elif(index+southValue>=0 && index+southValue<42) then                
-                if(index+(3*southValue) < 42 && not(t.[index] ="no"))then
-                    this.checkNext4Cells(index,southValue,t,cs,0)
+
             //Verification OUEST              
-            if(index+westValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 )then
+            if(index+westValue>41 || index=0 || index=7 || index=14 || index=21 || index=28 || index=35 || (t.[index] ="no") )then
                 printfn "On ne peut pas verifier sur la gauche "
             elif(index+westValue< 42 && index+westValue >= 0)then
-                printfn "On  peut verifier sur la gauche à "
-                if(index+(3*westValue) < 42 && index+(3*westValue) >= 0 && not(t.[index] ="no"))then
+                if(index+(3*westValue) < 42 && index+(3*westValue) >= 0 )then
                     this.checkNext4Cells(index,westValue,t,cw,0)
-            //Verification SUD OUEST 
-            if(index+southWestValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 || index=37 || index=38 || index=39 || index=40 || index=41 )then
-                printfn "On ne peut pas verifier sur la BAS GAUCHE à "
-            elif(index+southWestValue < 42 && index+(3*southWestValue) >= 0)then
-                printfn "On  peut verifier sur lE BAS GAUCHE à "
-                if(index+(3*southWestValue) < 42 && not(t.[index] ="no"))then
-                    this.checkNext4Cells(index,southWestValue,t,csw,0)
-            //Verification SUD EST 
-            if(index+southEastValue>41 || index=41 || index=36 || index=37 || index=38 || index=39 || index=40 || index=35 || index=29 || index=23 || index=17 || index=11 || index=5 )then
-                printfn "On ne peut pas verifier sur la BAS DROITE à "
-            elif(index+southEastValue < 42)then
-                printfn "On  peut verifier sur lE BAS DROITE à "
-                if(index+(3*southEastValue) < 42 && not(t.[index] ="no"))then
-                    this.checkNext4Cells(index,southEastValue,t,cse,0)
             //Verification NORD OUEST 
-            if(index+northWestValue<0 || index=0 || index=1 || index=2 || index=3 || index=4 || index=5 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 )then
+            if(index+northWestValue<0 || index=0 || index=1 || index=2 || index=3 || index=4 || index=5 || index=6 || index=7 || index=14 || index=21 || index=28 || index=35 )then
                 printfn "On ne peut pas verifier sur le HAUT GAUCHE "
             elif( index+northWestValue >= 0)then
-                printfn "On  peut verifier sur lE HAUT GAUCHE à "
                 if(not(t.[index] ="no") && index+(3*northWestValue) >= 0)then
                     this.checkNext4Cells(index,northWestValue,t,cnw,0)
             //Verification NORD EST 
-            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 || index=11|| index=17 || index=23 || index=29 || index=35|| index=41 )then
+            if(index+northEastValue<0 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 || index=6|| index=13 || index=20 || index=27 || index=34|| index=41 )then
                 printfn "On ne peut pas verifier sur la HAUT DROITE "
             elif(index+northEastValue >= 0)then
-                printfn "On  peut verifier sur lE HAUT DROITE à "
                 if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
                     this.checkNext4Cells(index,northEastValue,t,cne,0)
             //Verification NORD 
-            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 )then
+            if(index+northValue<0 || index=6 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 )then
                 printfn "On ne peut pas verifier sur la HAUT "
-            elif(index+northEastValue >= 0)then
-                printfn "On  peut verifier sur lE HAUT "
-                if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
-                    this.checkNext4Cells(index,northEastValue,t,cne,0)
-                    
+            elif(index+northValue >= 0)then
+                if( not(t.[index] ="no") && index+(3*northValue) >= 0)then
+                    this.checkNext4Cells(index,northValue,t,cne,0)                 
 end
-
-let g = new Game()
-g.setId(1)
-g.setFirstPlayer("Alvin")
-
-printfn " player 1 : %s" g.playerName1
-printfn " player 2 : %s" g.playerName2
-g.joinGame("seiya","azyeyazyeyaz")
-printfn " player 2 : %s" g.playerName2
-printfn " on lance une action du p1 à la col 5"
-g.playerAction(g.playerName1, 0)
-
-//ok
-g.playerAction(g.playerName1, 4)
-g.playerAction(g.playerName1, 3)
-g.playerAction(g.playerName1, 1)
-g.playerAction(g.playerName1, 2)
-g.playerAction(g.playerName1, 5)
-
-for c in g.gridCells do
-   printfn "%s" c
-
-//tourner la grille 90° vers la gauche ok ok horizontale et verticale
-g.turnGridToLeft(g.playerName2)
-//tourner la grille 90° vers la gauche ok ok horizontale et verticale
-g.turnGridToRight(g.playerName2)
-   
-printfn "%i" g.gridCells.Length
-printfn "%s" g.gridOrientation
-printfn "%s" g.gridCells.[41]
-printfn "%s" g.gridCells.[40]
-printfn "%s" g.gridCells.[39]
-printfn "%s" g.gridCells.[38]
-printfn "%s" g.gridCells.[37]
-
-
-printfn "%b" (g.gridOrientation = "vertical")

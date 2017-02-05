@@ -1,0 +1,1172 @@
+var _user$project$Main$gridCell = F2(
+	function (cells, index) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$classList(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'cell', _1: true},
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: A2(
+									_elm_lang$core$Maybe$withDefault,
+									'no',
+									A2(_elm_lang$core$Array$get, index, cells)),
+								_1: true
+							},
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'vertical-aligner', _1: true},
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$classList(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'token', _1: true},
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Main$gridLineChildren = F4(
+	function (cells, index, remainingCells, currentList) {
+		return (_elm_lang$core$Native_Utils.cmp(remainingCells, 0) > 0) ? _elm_lang$core$List$concat(
+			{
+				ctor: '::',
+				_0: currentList,
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '::',
+						_0: A2(_user$project$Main$gridCell, cells, index),
+						_1: {ctor: '[]'}
+					},
+					_1: {
+						ctor: '::',
+						_0: A4(_user$project$Main$gridLineChildren, cells, index + 1, remainingCells - 1, currentList),
+						_1: {ctor: '[]'}
+					}
+				}
+			}) : _elm_lang$core$List$concat(
+			{
+				ctor: '::',
+				_0: currentList,
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '::',
+						_0: A2(_user$project$Main$gridCell, cells, index),
+						_1: {ctor: '[]'}
+					},
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Main$gridLine = F3(
+	function (cells, index, remainingCells) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$classList(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: 'line', _1: true},
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			},
+			A4(
+				_user$project$Main$gridLineChildren,
+				cells,
+				index,
+				remainingCells,
+				{ctor: '[]'}));
+	});
+var _user$project$Main$stylesheet = function () {
+	var children = {ctor: '[]'};
+	var attrs = {
+		ctor: '::',
+		_0: A2(_elm_lang$html$Html_Attributes$attribute, 'rel', 'stylesheet'),
+		_1: {
+			ctor: '::',
+			_0: A2(_elm_lang$html$Html_Attributes$attribute, 'property', 'stylesheet'),
+			_1: {
+				ctor: '::',
+				_0: A2(_elm_lang$html$Html_Attributes$attribute, 'href', 'http://localhost:8383/tourni4.css'),
+				_1: {ctor: '[]'}
+			}
+		}
+	};
+	var tag = 'link';
+	return A3(_elm_lang$html$Html$node, tag, attrs, children);
+}();
+var _user$project$Main$decodeGameJoin = A2(
+	_elm_lang$core$Json_Decode$at,
+	{
+		ctor: '::',
+		_0: 'player2Key',
+		_1: {ctor: '[]'}
+	},
+	_elm_lang$core$Json_Decode$string);
+var _user$project$Main$Game = F6(
+	function (a, b, c, d, e, f) {
+		return {key: a, status: b, player1Name: c, player2Name: d, gridOrientation: e, gridCells: f};
+	});
+var _user$project$Main$initGame = function (gameKey) {
+	return A6(
+		_user$project$Main$Game,
+		gameKey,
+		'WAITING',
+		'',
+		'',
+		'horizontal',
+		{
+			ctor: '::',
+			_0: 'no',
+			_1: {
+				ctor: '::',
+				_0: 'no',
+				_1: {
+					ctor: '::',
+					_0: 'no',
+					_1: {
+						ctor: '::',
+						_0: 'no',
+						_1: {
+							ctor: '::',
+							_0: 'no',
+							_1: {
+								ctor: '::',
+								_0: 'no',
+								_1: {
+									ctor: '::',
+									_0: 'no',
+									_1: {
+										ctor: '::',
+										_0: 'no',
+										_1: {
+											ctor: '::',
+											_0: 'no',
+											_1: {
+												ctor: '::',
+												_0: 'no',
+												_1: {
+													ctor: '::',
+													_0: 'no',
+													_1: {
+														ctor: '::',
+														_0: 'no',
+														_1: {
+															ctor: '::',
+															_0: 'no',
+															_1: {
+																ctor: '::',
+																_0: 'no',
+																_1: {
+																	ctor: '::',
+																	_0: 'no',
+																	_1: {
+																		ctor: '::',
+																		_0: 'no',
+																		_1: {
+																			ctor: '::',
+																			_0: 'no',
+																			_1: {
+																				ctor: '::',
+																				_0: 'no',
+																				_1: {
+																					ctor: '::',
+																					_0: 'no',
+																					_1: {
+																						ctor: '::',
+																						_0: 'no',
+																						_1: {
+																							ctor: '::',
+																							_0: 'no',
+																							_1: {
+																								ctor: '::',
+																								_0: 'no',
+																								_1: {
+																									ctor: '::',
+																									_0: 'no',
+																									_1: {
+																										ctor: '::',
+																										_0: 'no',
+																										_1: {
+																											ctor: '::',
+																											_0: 'no',
+																											_1: {
+																												ctor: '::',
+																												_0: 'no',
+																												_1: {
+																													ctor: '::',
+																													_0: 'no',
+																													_1: {
+																														ctor: '::',
+																														_0: 'no',
+																														_1: {
+																															ctor: '::',
+																															_0: 'no',
+																															_1: {
+																																ctor: '::',
+																																_0: 'no',
+																																_1: {
+																																	ctor: '::',
+																																	_0: 'no',
+																																	_1: {
+																																		ctor: '::',
+																																		_0: 'no',
+																																		_1: {
+																																			ctor: '::',
+																																			_0: 'no',
+																																			_1: {
+																																				ctor: '::',
+																																				_0: 'no',
+																																				_1: {
+																																					ctor: '::',
+																																					_0: 'no',
+																																					_1: {
+																																						ctor: '::',
+																																						_0: 'no',
+																																						_1: {
+																																							ctor: '::',
+																																							_0: 'no',
+																																							_1: {
+																																								ctor: '::',
+																																								_0: 'no',
+																																								_1: {
+																																									ctor: '::',
+																																									_0: 'no',
+																																									_1: {
+																																										ctor: '::',
+																																										_0: 'no',
+																																										_1: {
+																																											ctor: '::',
+																																											_0: 'no',
+																																											_1: {
+																																												ctor: '::',
+																																												_0: 'no',
+																																												_1: {ctor: '[]'}
+																																											}
+																																										}
+																																									}
+																																								}
+																																							}
+																																						}
+																																					}
+																																				}
+																																			}
+																																		}
+																																	}
+																																}
+																															}
+																														}
+																													}
+																												}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+};
+var _user$project$Main$decodeGameInfo = A7(
+	_elm_lang$core$Json_Decode$map6,
+	_user$project$Main$Game,
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'key',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'status',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'player1Name',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'player2Name',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'gridOrientation',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'gridCells',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)));
+var _user$project$Main$ApiCreateResponse = F2(
+	function (a, b) {
+		return {playerKey: a, gameKey: b};
+	});
+var _user$project$Main$decodeGameCreate = A3(
+	_elm_lang$core$Json_Decode$map2,
+	_user$project$Main$ApiCreateResponse,
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'player1Key',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string),
+	A2(
+		_elm_lang$core$Json_Decode$at,
+		{
+			ctor: '::',
+			_0: 'gameKey',
+			_1: {ctor: '[]'}
+		},
+		_elm_lang$core$Json_Decode$string));
+var _user$project$Main$Action = F2(
+	function (a, b) {
+		return {actionType: a, actionInfo: b};
+	});
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {name: a, playerKey: b, inGame: c, game: d};
+	});
+var _user$project$Main$initModel = function (name) {
+	return {
+		ctor: '_Tuple2',
+		_0: A4(
+			_user$project$Main$Model,
+			name,
+			'',
+			false,
+			_user$project$Main$initGame('')),
+		_1: _elm_lang$core$Platform_Cmd$none
+	};
+};
+var _user$project$Main$ReturnToHome = {ctor: 'ReturnToHome'};
+var _user$project$Main$gameInfoBar = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$classList(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'gameInfoBar', _1: true},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: function () {
+				var _p0 = model.game.status;
+				switch (_p0) {
+					case 'WAITING':
+						return _elm_lang$html$Html$text(
+							A2(_elm_lang$core$Basics_ops['++'], 'Second player must use this key : ', model.game.key));
+					case 'TURN_PLAYER_1':
+						return _elm_lang$html$Html$text(
+							A2(_elm_lang$core$Basics_ops['++'], model.game.player1Name, '\'s turn'));
+					case 'TURN_PLAYER_2':
+						return _elm_lang$html$Html$text(
+							A2(_elm_lang$core$Basics_ops['++'], model.game.player2Name, '\'s turn'));
+					case 'PLAYER_1_WON':
+						return A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									A2(_elm_lang$core$Basics_ops['++'], model.game.player1Name, ' won')),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ReturnToHome),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('play another game'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							});
+					case 'PLAYER_2_WON':
+						return A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									A2(_elm_lang$core$Basics_ops['++'], model.game.player2Name, ' won')),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ReturnToHome),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('play another game'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							});
+					default:
+						return _elm_lang$html$Html$text('invalid game status');
+				}
+			}(),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$GameActionDone = function (a) {
+	return {ctor: 'GameActionDone', _0: a};
+};
+var _user$project$Main$GameInfoDone = function (a) {
+	return {ctor: 'GameInfoDone', _0: a};
+};
+var _user$project$Main$apiInfoGame = function (gameKey) {
+	var url = A2(_elm_lang$core$Basics_ops['++'], 'http://localhost:8083/elm/api/info.php?gameKey=', gameKey);
+	return A2(
+		_elm_lang$http$Http$send,
+		_user$project$Main$GameInfoDone,
+		A2(_elm_lang$http$Http$get, url, _user$project$Main$decodeGameInfo));
+};
+var _user$project$Main$apiActionGame = F3(
+	function (playerKey, actionType, actionInfo) {
+		var url = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'http://localhost:8083/elm/api/action.php?playerKey=',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				playerKey,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'&actionType=',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						actionType,
+						A2(_elm_lang$core$Basics_ops['++'], '&actionInfo=', actionInfo)))));
+		return A2(
+			_elm_lang$http$Http$send,
+			_user$project$Main$GameInfoDone,
+			A2(_elm_lang$http$Http$get, url, _user$project$Main$decodeGameInfo));
+	});
+var _user$project$Main$GameJoinDone = function (a) {
+	return {ctor: 'GameJoinDone', _0: a};
+};
+var _user$project$Main$apiJoinGame = F2(
+	function (name, gameKey) {
+		var url = A2(
+			_elm_lang$core$Basics_ops['++'],
+			'http://localhost:8083/elm/api/join.php?playerName=',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				name,
+				A2(_elm_lang$core$Basics_ops['++'], '&gameKey=', gameKey)));
+		return A2(
+			_elm_lang$http$Http$send,
+			_user$project$Main$GameJoinDone,
+			A2(_elm_lang$http$Http$get, url, _user$project$Main$decodeGameJoin));
+	});
+var _user$project$Main$GameCreateDone = function (a) {
+	return {ctor: 'GameCreateDone', _0: a};
+};
+var _user$project$Main$apiCreateGame = function (name) {
+	var url = A2(_elm_lang$core$Basics_ops['++'], 'http://localhost:8083/elm/api/create.php?playerName=', name);
+	return A2(
+		_elm_lang$http$Http$send,
+		_user$project$Main$GameCreateDone,
+		A2(_elm_lang$http$Http$get, url, _user$project$Main$decodeGameCreate));
+};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'ReturnToHome':
+				return _user$project$Main$initModel(model.name);
+			case 'ChangeName':
+				return {
+					ctor: '_Tuple2',
+					_0: A4(
+						_user$project$Main$Model,
+						_p1._0,
+						'',
+						false,
+						_user$project$Main$initGame(model.game.key)),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ChangeGameKey':
+				return {
+					ctor: '_Tuple2',
+					_0: A4(
+						_user$project$Main$Model,
+						model.name,
+						'',
+						false,
+						_user$project$Main$initGame(_p1._0)),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'GameCreate':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Main$apiCreateGame(model.name)
+				};
+			case 'GameJoin':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: A2(_user$project$Main$apiJoinGame, model.name, model.game.key)
+				};
+			case 'GameInfo':
+				return _elm_lang$core$Native_Utils.eq(model.inGame, true) ? {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Main$apiInfoGame(model.game.key)
+				} : {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'GameAction':
+				var _p2 = _p1._0;
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: A3(_user$project$Main$apiActionGame, model.playerKey, _p2.actionType, _p2.actionInfo)
+				};
+			case 'GameCreateDone':
+				if (_p1._0.ctor === 'Ok') {
+					var _p3 = _p1._0._0;
+					return {
+						ctor: '_Tuple2',
+						_0: A4(
+							_user$project$Main$Model,
+							model.name,
+							_p3.playerKey,
+							true,
+							_user$project$Main$initGame(_p3.gameKey)),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'GameJoinDone':
+				if (_p1._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A4(
+							_user$project$Main$Model,
+							model.name,
+							_p1._0._0,
+							true,
+							_user$project$Main$initGame(model.game.key)),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'GameInfoDone':
+				if (_p1._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A4(_user$project$Main$Model, model.name, model.playerKey, true, _p1._0._0),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			default:
+				if (_p1._0.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: A4(_user$project$Main$Model, model.name, model.playerKey, true, _p1._0._0),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+		}
+	});
+var _user$project$Main$GameAction = function (a) {
+	return {ctor: 'GameAction', _0: a};
+};
+var _user$project$Main$gameActionBarColumnButton = function (index) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$classList(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'cell', _1: true},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$classList(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'vertical-aligner', _1: true},
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$button,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$Main$GameAction(
+								A2(_user$project$Main$Action, 'token', index))),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('↓'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$gameActionBarChildren_ = F3(
+	function (index, remaining, currentList) {
+		return (_elm_lang$core$Native_Utils.cmp(remaining, 0) > 0) ? _elm_lang$core$List$concat(
+			{
+				ctor: '::',
+				_0: currentList,
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '::',
+						_0: _user$project$Main$gameActionBarColumnButton(
+							_elm_lang$core$Basics$toString(index)),
+						_1: {ctor: '[]'}
+					},
+					_1: {
+						ctor: '::',
+						_0: A3(_user$project$Main$gameActionBarChildren_, index + 1, remaining - 1, currentList),
+						_1: {ctor: '[]'}
+					}
+				}
+			}) : _elm_lang$core$List$concat(
+			{
+				ctor: '::',
+				_0: currentList,
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '::',
+						_0: _user$project$Main$gameActionBarColumnButton(
+							_elm_lang$core$Basics$toString(index)),
+						_1: {ctor: '[]'}
+					},
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Main$gameActionBarChildren = function (gridOrientation) {
+	return _elm_lang$core$Native_Utils.eq(gridOrientation, 'horizontal') ? A3(
+		_user$project$Main$gameActionBarChildren_,
+		0,
+		7,
+		{ctor: '[]'}) : A3(
+		_user$project$Main$gameActionBarChildren_,
+		0,
+		6,
+		{ctor: '[]'});
+};
+var _user$project$Main$gameActionBar_ = function (gridOrientation) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$classList(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'line', _1: true},
+							_1: {
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'header', _1: true},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$classList(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'cell', _1: true},
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'left', _1: true},
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$classList(
+										{
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'vertical-aligner', _1: true},
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Main$GameAction(
+												A2(_user$project$Main$Action, 'turn', 'left'))),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('↶'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$classList(
+									{
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'cell', _1: true},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'right', _1: true},
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$classList(
+											{
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'vertical-aligner', _1: true},
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(
+												_user$project$Main$GameAction(
+													A2(_user$project$Main$Action, 'turn', 'right'))),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('↷'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'line', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'header', _1: true},
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					},
+					_user$project$Main$gameActionBarChildren(gridOrientation)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$gameActionBar = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$classList(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'gameActionBar', _1: true},
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: (_elm_lang$core$Native_Utils.eq(model.game.status, 'TURN_PLAYER_1') && _elm_lang$core$Native_Utils.eq(model.name, model.game.player1Name)) ? _user$project$Main$gameActionBar_(model.game.gridOrientation) : ((_elm_lang$core$Native_Utils.eq(model.game.status, 'TURN_PLAYER_2') && _elm_lang$core$Native_Utils.eq(model.name, model.game.player2Name)) ? _user$project$Main$gameActionBar_(model.game.gridOrientation) : _elm_lang$html$Html$text('')),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$gridHorizontal = F2(
+	function (model, cells) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _user$project$Main$gameActionBar(model),
+				_1: {
+					ctor: '::',
+					_0: A3(_user$project$Main$gridLine, cells, 0, 7),
+					_1: {
+						ctor: '::',
+						_0: A3(_user$project$Main$gridLine, cells, 7, 7),
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$Main$gridLine, cells, 14, 7),
+							_1: {
+								ctor: '::',
+								_0: A3(_user$project$Main$gridLine, cells, 21, 7),
+								_1: {
+									ctor: '::',
+									_0: A3(_user$project$Main$gridLine, cells, 28, 7),
+									_1: {
+										ctor: '::',
+										_0: A3(_user$project$Main$gridLine, cells, 35, 7),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Main$grid = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$classList(
+				{
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'grid', _1: true},
+					_1: {
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: model.game.gridOrientation, _1: true},
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _user$project$Main$gameInfoBar(model),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_user$project$Main$gridHorizontal,
+					model,
+					_elm_lang$core$Array$fromList(model.game.gridCells)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$gridVertical = F2(
+	function (model, cells) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _user$project$Main$gameActionBar(model),
+				_1: {
+					ctor: '::',
+					_0: A3(_user$project$Main$gridLine, cells, 0, 6),
+					_1: {
+						ctor: '::',
+						_0: A3(_user$project$Main$gridLine, cells, 6, 6),
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$Main$gridLine, cells, 12, 6),
+							_1: {
+								ctor: '::',
+								_0: A3(_user$project$Main$gridLine, cells, 18, 6),
+								_1: {
+									ctor: '::',
+									_0: A3(_user$project$Main$gridLine, cells, 24, 6),
+									_1: {
+										ctor: '::',
+										_0: A3(_user$project$Main$gridLine, cells, 30, 6),
+										_1: {
+											ctor: '::',
+											_0: A3(_user$project$Main$gridLine, cells, 36, 6),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Main$GameInfo = function (a) {
+	return {ctor: 'GameInfo', _0: a};
+};
+var _user$project$Main$subscriptions = function (model) {
+	return A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second, _user$project$Main$GameInfo);
+};
+var _user$project$Main$GameJoin = {ctor: 'GameJoin'};
+var _user$project$Main$GameCreate = {ctor: 'GameCreate'};
+var _user$project$Main$ChangeGameKey = function (a) {
+	return {ctor: 'ChangeGameKey', _0: a};
+};
+var _user$project$Main$ChangeName = function (a) {
+	return {ctor: 'ChangeName', _0: a};
+};
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _user$project$Main$stylesheet,
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.eq(model.inGame, false) ? A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$placeholder('Your name'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$ChangeName),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$value(model.name),
+										_1: {ctor: '[]'}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$GameCreate),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('create'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$input,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$placeholder('Game Key'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$ChangeGameKey),
+											_1: {ctor: '[]'}
+										}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$GameJoin),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('join'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}) : A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$classList(
+							{
+								ctor: '::',
+								_0: {ctor: '_Tuple2', _0: 'grid', _1: true},
+								_1: {
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: model.game.gridOrientation, _1: true},
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _user$project$Main$gameInfoBar(model),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Native_Utils.eq(model.game.gridOrientation, 'horizontal') ? A2(
+								_user$project$Main$gridHorizontal,
+								model,
+								_elm_lang$core$Array$fromList(model.game.gridCells)) : A2(
+								_user$project$Main$gridVertical,
+								model,
+								_elm_lang$core$Array$fromList(model.game.gridCells)),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$main = _elm_lang$html$Html$program(
+	{
+		init: _user$project$Main$initModel(''),
+		view: _user$project$Main$view,
+		update: _user$project$Main$update,
+		subscriptions: _user$project$Main$subscriptions
+	})();

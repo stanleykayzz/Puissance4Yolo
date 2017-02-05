@@ -1,0 +1,75 @@
+.gameInfoBar{
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.gameInfoBar button{
+  margin-left: 20px;;
+}
+.gameInfoBar,
+.gameActionBar{
+  height: 100px;
+}
+
+.grid{
+  margin:auto;
+}
+
+.horizontal.grid {
+  width:350px;
+}
+
+.vertical.grid {
+  width:300px;
+}
+
+.line {
+  height: 50px;
+  font-size: 0;
+  background-color: blue;
+
+}
+
+.line.header{
+  background-color:white;
+}
+.line.header .cell .token{
+  background-color:grey;
+}
+.cell {
+  display: inline-block;
+  height:50px;
+  width: 50px;
+  text-align: center;
+}
+
+.cell.left {
+  float: left;
+}
+
+.cell.right {
+  float: right;
+}
+
+.cell .token{
+  border-radius: 40px;
+  width:80%;height:80%;
+  vertical-align: middle;
+  display: inline-block;
+}
+.cell.no .token{
+  background-color: white;
+}
+.cell.p1 .token{
+  background-color: yellow;
+}
+.cell.p2 .token{
+  background-color: red;
+}
+.vertical-aligner{
+  width:0;
+  height:100%;
+  vertical-align: middle;
+  display:inline-block;
+}

@@ -402,6 +402,72 @@ type Game = class
                 printfn "On  peut verifier sur lE HAUT "
                 if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
                     this.checkNext4Cells(index,northEastValue,t,cne,0)
+        
+        if(this.gridOrientation="horizontal")then
+            let mutable northValue:int = (-7)
+            let mutable northEastValue=(-6)
+            let mutable northWestValue=(-8)
+            let mutable southEastValue=8
+            let mutable southWestValue=6
+            let mutable southValue=7
+            let mutable eastValue=1
+            let mutable westValue=(-1)
+            //Vérification EST
+            if(index+eastValue>41 || index=41 || index=35 || index=29 || index=23 || index=17 || index=11 || index=5 )then
+                printfn "On ne peut pas verifier sur la droite  "
+            elif(index+eastValue>=0 && index+eastValue<42)then
+               printfn "On  peut verifier sur la droite à "
+              //on vérifie les 4 prochaines valeurs tant que c'est possible
+               if(index+(3*eastValue) < 42 && not(t.[index] ="no"))then
+                   this.checkNext4Cells(index,eastValue,t,ce,0)
+            //Verification SUD
+            if(index+southValue>41 || index=36 || index=37 || index=38 || index=39 || index=40 || index=41 )then
+                printfn "On ne peut pas verifier le bas à "
+            elif(index+southValue>=0 && index+southValue<42) then                
+                if(index+(3*southValue) < 42 && not(t.[index] ="no"))then
+                    this.checkNext4Cells(index,southValue,t,cs,0)
+            //Verification OUEST              
+            if(index+westValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 )then
+                printfn "On ne peut pas verifier sur la gauche "
+            elif(index+westValue< 42 && index+westValue >= 0)then
+                printfn "On  peut verifier sur la gauche à "
+                if(index+(3*westValue) < 42 && index+(3*westValue) >= 0 && not(t.[index] ="no"))then
+                    this.checkNext4Cells(index,westValue,t,cw,0)
+            //Verification SUD OUEST 
+            if(index+southWestValue>41 || index=0 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 || index=37 || index=38 || index=39 || index=40 || index=41 )then
+                printfn "On ne peut pas verifier sur la BAS GAUCHE à "
+            elif(index+southWestValue < 42 && index+(3*southWestValue) >= 0)then
+                printfn "On  peut verifier sur lE BAS GAUCHE à "
+                if(index+(3*southWestValue) < 42 && not(t.[index] ="no"))then
+                    this.checkNext4Cells(index,southWestValue,t,csw,0)
+            //Verification SUD EST 
+            if(index+southEastValue>41 || index=41 || index=36 || index=37 || index=38 || index=39 || index=40 || index=35 || index=29 || index=23 || index=17 || index=11 || index=5 )then
+                printfn "On ne peut pas verifier sur la BAS DROITE à "
+            elif(index+southEastValue < 42)then
+                printfn "On  peut verifier sur lE BAS DROITE à "
+                if(index+(3*southEastValue) < 42 && not(t.[index] ="no"))then
+                    this.checkNext4Cells(index,southEastValue,t,cse,0)
+            //Verification NORD OUEST 
+            if(index+northWestValue<0 || index=0 || index=1 || index=2 || index=3 || index=4 || index=5 || index=6 || index=12 || index=18 || index=24 || index=30 || index=36 )then
+                printfn "On ne peut pas verifier sur le HAUT GAUCHE "
+            elif( index+northWestValue >= 0)then
+                printfn "On  peut verifier sur lE HAUT GAUCHE à "
+                if(not(t.[index] ="no") && index+(3*northWestValue) >= 0)then
+                    this.checkNext4Cells(index,northWestValue,t,cnw,0)
+            //Verification NORD EST 
+            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 || index=11|| index=17 || index=23 || index=29 || index=35|| index=41 )then
+                printfn "On ne peut pas verifier sur la HAUT DROITE "
+            elif(index+northEastValue >= 0)then
+                printfn "On  peut verifier sur lE HAUT DROITE à "
+                if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
+                    this.checkNext4Cells(index,northEastValue,t,cne,0)
+            //Verification NORD 
+            if(index+northEastValue<0 || index=41 || index=0|| index=1|| index=2  || index=3 || index=4 || index=5 )then
+                printfn "On ne peut pas verifier sur la HAUT "
+            elif(index+northEastValue >= 0)then
+                printfn "On  peut verifier sur lE HAUT "
+                if( not(t.[index] ="no") && index+(3*northEastValue) >= 0)then
+                    this.checkNext4Cells(index,northEastValue,t,cne,0)
                     
 end
 
